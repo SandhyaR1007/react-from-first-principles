@@ -3,10 +3,8 @@ import { createElement, render } from "./utility.js";
 // Our custom React
 const Acter = { createElement, render };
 
-// A helper to generate a HUGE tree
-
 function generateBigTree(depth = 0) {
-  if (depth > 1650) return "End"; // breaks beyond this
+  if (depth > 1650) return "End";
 
   return Acter.createElement(
     "div",
@@ -18,15 +16,24 @@ function generateBigTree(depth = 0) {
     generateBigTree(depth + 1),
   );
 }
+function updateApp(value = "") {
+  const element = Acter.createElement(
+    "div",
+    null,
+    Acter.createElement("h1", null, `Current value: ${value}`),
+    Acter.createElement("input", {
+      id: "input",
+      value,
+      oninput: (e) => updateApp(e.target.value),
+      placeholder: "Type something",
+    }),
+    Acter.createElement("p", null, "Test"),
+  );
+  const container = document.body;
+  container.innerHTML = "";
+  Acter.render(element, container);
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.time("Render Time"); // Start timer
-
-  const bigTree = generateBigTree(0); // Create the heavy object
-  Acter.render(bigTree, document.body); // Start the recursive render
-
-  console.timeEnd("Render Time"); // Stop timer
-  console.log(
-    "If you see this immediately, your browser is fast. But try interacting with the page!",
-  );
+  updateApp();
 });

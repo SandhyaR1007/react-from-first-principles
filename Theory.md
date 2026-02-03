@@ -21,3 +21,10 @@ props: { className: "blue" }
 
 - These are immutable, for any change we need to describe element tree from scratch.
 - Elements are like movie frames that represent the UI at a specific point in time.
+
+- JS call stack has a hard limit (~10–20k frames, browser-dependent), deep recursive function calls can lead to Maximum Call Stack Exceeded error.
+
+**Preserving states**
+
+- React preserves a Component's state as long as it is being rendered at its position in the UI tree. For preserving, the structure needs to match up.
+- You can provide keys(not just for lists).
